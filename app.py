@@ -1,24 +1,17 @@
+import re
 import requests
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
-import re
 
 
 cookies = {
-    
 }
-
 headers = {
-
 }
-
 params = {
     'detail_source': 'resume_direct',
 }
-
 response = requests.get('https://internshala.com/student/resume', params=params, cookies=cookies, headers=headers)
-
-
 data = dict()
 
 
