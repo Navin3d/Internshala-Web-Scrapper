@@ -1,5 +1,8 @@
 # Internshala-Web-Scrapper
 
+## Installments
+- pip install -r requiremnts.txt
+
 ## How To Use:
 - Open the internshala page which you want to scrap for github links.
 - Open the network tab in developer tools and choose all.
