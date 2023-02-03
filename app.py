@@ -1,18 +1,15 @@
 import re
 import requests
-from urllib.request import urlopen
 from bs4 import BeautifulSoup
+from urllib.request import urlopen
+
+from config import url, cookies, headers, params
 
 
-cookies = {
+response = requests.get(url, params=params, headers=headers, cookies=cookies)
+data = {
+    "github": dict()
 }
-headers = {
-}
-params = {
-    'detail_source': 'resume_direct',
-}
-response = requests.get('https://internshala.com/student/resume', params=params, cookies=cookies, headers=headers)
-data = dict()
 
 
 def get_github_username(text):
@@ -27,9 +24,9 @@ def get_github_username(text):
         git_link_matched = re.findall("https://github.com/([A-Za-z0-9]{1,})+/?$", exact_link)
         if git_link_matched:
             github_links = git_link_matched
-            data["github_url"] = exact_link
+            data["github"]["profile_url"] = exact_link
 
-    data["github_username"] = github_links[0]
+    data["github"]["username"] = github_links[0]
 
 
 def get_passout_year(text):
@@ -53,10 +50,10 @@ def get_github_stats(username):
 
     for text in texts:
         if text.get("data-testid") == "commits":
-            data["github_commits"] = int(text.get_text())
+            data["github"]["commits"] = int(text.get_text())
 
 
 get_passout_year(response.content)
 get_github_username(response.content)
-get_github_stats(data["github_username"])
+get_github_stats(data["github"]["username"])
 print(data)
