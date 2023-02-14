@@ -1,8 +1,2 @@
-url = ""
-cookies = {
-}
-headers = {
-}
-params = {
-    'detail_source': 'resume_direct',
-}
+internshala_username = ""
+internshala_password = ""

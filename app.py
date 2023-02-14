@@ -1,12 +1,11 @@
 import re
-import requests
 from bs4 import BeautifulSoup
 from urllib.request import urlopen
 
-from config import url, cookies, headers, params
+from config_local import *
+from actions.click_test import *
 
 
-response = requests.get(url, params=params, headers=headers, cookies=cookies)
 data = {
     "github": dict()
 }
@@ -53,7 +52,16 @@ def get_github_stats(username):
             data["github"]["commits"] = int(text.get_text())
 
 
-get_passout_year(response.content)
-get_github_username(response.content)
+login(internshala_username, internshala_password)
+navigate_to_edit_resume()
+add_position("Jr_DEV")
+time.sleep(15)
+
+driver.get(driver.current_url)
+
+page_content = driver.find_element(By.TAG_NAME, "html").get_attribute("outerHTML")
+
+get_passout_year(page_content)
+get_github_username(page_content)
 get_github_stats(data["github"]["username"])
 print(data)
